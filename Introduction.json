@@ -1,0 +1,48 @@
+{
+  "type": "bubble",
+  "hero": {
+    "type": "image",
+    "url": "https://cdn2.ettoday.net/images/5424/d5424601.jpg",
+    "size": "full",
+    "aspectRatio": "20:13",
+    "aspectMode": "cover",
+    "action": {
+      "type": "uri",
+      "uri": "http://linecorp.com/"
+    }
+  },
+  "body": {
+    "type": "box",
+    "layout": "vertical",
+    "contents": [
+      {
+        "type": "text",
+        "text": "馬鈴薯",
+        "weight": "bold",
+        "size": "xl"
+      }
+    ]
+  },
+  "footer": {
+    "type": "box",
+    "layout": "vertical",
+    "spacing": "sm",
+    "contents": [
+      {
+        "type": "button",
+        "style": "link",
+        "height": "sm",
+        "action": {
+          "type": "uri",
+          "label": "WEBSITE",
+          "uri": "https://www.pui-pui.com.tw/#storytitle"
+        }
+      },
+      {
+        "type": "spacer",
+        "size": "sm"
+      }
+    ],
+    "flex": 0
+  }
+}
