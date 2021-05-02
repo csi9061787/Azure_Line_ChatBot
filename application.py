@@ -38,8 +38,8 @@ def handle_message(event):
         with open("Introduction.json", "r") as f_r:
             bubble = json.load(f_r)
         f_r.close()
-        LINE_BOT.reply_message(event.reply_token,
-        [FlexSendMessage(alt_text="Report", contents=bubble)]
-        )
+        message = FlexSendMessage(alt_text="Report", contents=bubble)
     else:
         message = TextSendMessage(text=event.message.text)
+        
+    LINE_BOT.reply_message(event.reply_token, message)
