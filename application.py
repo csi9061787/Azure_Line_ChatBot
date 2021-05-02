@@ -46,3 +46,13 @@ def handle_message(event):
 # 回覆訊息
     LINE_BOT.reply_message(event.reply_token, message)
 
+with open("Introduction.json", "r") as f_r:
+   bubble = json.load(f_r)
+f_r.close()
+# 依情況更動 components
+LINE_BOT.reply_message(
+   event.reply_token, 
+   [
+     FlexSendMessage(alt_text="Report", contents=bubble)
+     ]
+)
