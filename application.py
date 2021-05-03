@@ -2,10 +2,12 @@ from flask import Flask, request, abort
 from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
 from msrest.authentication import CognitiveServicesCredentials
+from azure.cognitiveservices.vision.computervision.models import OperationStatusCodes
 import os
 import json
 from imgur_python import Imgur
 import re
+from PIL import Image, ImageDraw, ImageFont
 import time
 import requests
 from datetime import datetime, timezone, timedelta
