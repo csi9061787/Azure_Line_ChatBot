@@ -145,7 +145,7 @@ def azure_ocr(url):
                 if len(line.text) <= 8:
                     text.append(line.text)
                     
-    r = re.complie("[0-9A-Z]{2,4}[.-]{1}[0-9A-Z]{2,4}")
+    r = re.compile("[0-9A-Z]{2,4}[.-]{1}[0-9A-Z]{2,4}")
     text = list(filter(r.match, text))
     return text[0].replace('.','-') if len(text) > 0 else ""
 
