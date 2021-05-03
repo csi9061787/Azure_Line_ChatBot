@@ -5,5 +5,5 @@ line-bot-sdk
 imgur-python
 Pillow
 azure.cognitiveservices.vision.computervision
-datetime
+azure-cognitiveservices-vision-face
 
