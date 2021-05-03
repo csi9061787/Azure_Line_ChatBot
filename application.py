@@ -69,7 +69,7 @@ def azure_object_detection(url, filename):
                 font=fnt,
             )
     img.save(filename)
-    image = IMGUR_CLIENT.image_upload(filename, "title", "description")
+    image = IMGUR_CLIENT.image_upload(filename, "", "")
     link = image["response"]["data"]["link"]
     
     os.remove(filename)
