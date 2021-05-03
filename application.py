@@ -28,18 +28,18 @@ LINE_TOKEN = os.getenv('token')
 LINE_BOT = LineBotApi(LINE_TOKEN)
 HANDLER = WebhookHandler(LINE_SECRET)
 
+client_id = os.getenv("imgur_client_id"),
+client_secret =  os.getenv("imgur_client_secret")
+access_token = os.getenv("imgur_access_token")
+refresh_token = os.getenv("imgur_refresh_token")
+
 def azure_object_detection(url, filename):
     SUBSCRIPTION_KEY = os.getenv("detection_key")
     ENDPOINT = os.getenv("detection_endpoint")
     CV_CLIENT = ComputerVisionClient(
         ENDPOINT, CognitiveServicesCredentials(SUBSCRIPTION_KEY)
     )
-    IMGUR_CONFIG = {
-      "client_id": os.getenv("imgur_client_id"),
-      "client_secret": os.getenv("imgur_client_secret"),
-      "access_token": os.getenv("imgur_access_token"),
-      "refresh_token": os.getenv("imgur_refresh_token")
-    }
+    IMGUR_CONFIG = [client_id, client_secret, access_token, refresh_token]
     IMGUR_CLIENT = Imgur(config=IMGUR_CONFIG)
     
     img = Image.open(filename)
