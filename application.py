@@ -190,7 +190,7 @@ def handle_content_message(event):
     
     image = IMGUR_CLIENT.image_upload(filename, "title", "description")
     link = image["response"]["data"]["link"]
-    name = azure_face_recognition(filename)
+    name = azure_face_recongition(filename)
     if name != "":
         now = datetime.now(timezone(timedelta(hours=8))).strftime("%Y-%m-%d %H:%M")
         output = "{0}, {1}".format(name, now)
