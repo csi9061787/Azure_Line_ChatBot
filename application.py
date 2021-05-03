@@ -25,40 +25,46 @@ LINE_TOKEN = os.getenv('token')
 LINE_BOT = LineBotApi(LINE_TOKEN)
 HANDLER = WebhookHandler(LINE_SECRET)
 
-def azure_face_recongition(filename):
-    from azure.cognitiveservices.vision.face import FaceClient
-    from msrest.authentication import CognitiveServicesCredentials
+def azure_object_detection(url, filename):
+    SUBSCRIPTION_KEY = os.getenv("detection_key")
+    ENDPOINT = os.getenv("detection_endpoint")
+    CV_CLIENT = ComputerVisionClient(
+        ENDPOINT, CognitiveServicesCredentials(SUBSCRIPTION_KEY)
+    )
+    img = Image.open(filename)
+    draw = ImageDraw.Draw(img)
+    font_size = int(5e-2 * img.size[1])
+    fnt = ImageFont.truetype(
+      "TaipeiSansTCBeta-Regular.ttf", size=font_size)
+    object_detection = CV_CLIENT.detect_objects(url)
+    if len(object_detection.objects) > 0:
+        for obj in object_detection.objects:
+            left = obj.rectangle.x
+            top = obj.rectangle.y
+            right = obj.rectangle.x + obj.rectangle.w
+            bot = obj.rectangle.y + obj.rectangle.h
+            name = obj.object_property
+            confidence = obj.confidence
+            print("{} at location {}, {}, {}, {}".format(
+              name, left, right, top, bot))
+            draw.rectangle(
+              [left, top, right, bot],
+              outline=(255, 0, 0), width=3)
+            draw.text(
+                [left, top + font_size],
+                "{0} {1:0.1f}".format(name, confidence * 100),
+                fill=(255, 0, 0),
+                font=fnt,
+            )
+    img.save(filename)
+    image = IMGUR_CLIENT.image_upload(filename, '', '')
+    link = image["response"]["data"]["link"]
     
-    KEY = os.getenv("face_key")
-    ENDPOINT = os.getenv("face_endpoint")
-    FACE_CLIENT = FaceClient(
-      ENDPOINT, CognitiveServicesCredentials(KEY))
-    
-    PERSON_GROUP_ID = "ceb102"
-    img = open("C360_20210417-175242-77.jpg", 'r+b')
-    detected_face = FACE_CLIENT.face.detect_with_stream(
-        img, detection_model="detection_01")
-    try:
-        results = FACE_CLIENT.face.identify(
-                [detected_face[0].face_id], PERSON_GROUP_ID)
-        result = results[0].as_dict()
-# 如果在資料庫中有找到相像的人，會給予person ID
-# 再拿此person ID去查詢名字
-        if result["candidates"][0]["confidence"] > 0.5:
-            person = FACE_CLIENT.person_group_person.get(
-                    PERSON_GROUP_ID, result["candidates"][0]["person_id"]
-                    )
-            print("Person name is {}".format(person.name))
-        else:
-            print("Confidence is lower")
-    except:
-        print("I can't find face")
+    os.remove(filename)
+    return link
         
         
 def azure_face_recongition(filename):
-    from azure.cognitiveservices.vision.face import FaceClient
-    from msrest.authentication import CognitiveServicesCredentials
-    
     KEY = os.getenv("face_key")
     ENDPOINT = os.getenv("face_endpoint")
     FACE_CLIENT = FaceClient(
