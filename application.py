@@ -7,6 +7,7 @@ from azure.cognitiveservices.vision.face import FaceClient
 import os
 import json
 from imgur_python import Imgur
+import requests
 import re
 from PIL import Image, ImageDraw, ImageFont
 import time
