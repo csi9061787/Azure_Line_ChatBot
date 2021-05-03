@@ -39,7 +39,7 @@ def azure_object_detection(url, filename):
     CV_CLIENT = ComputerVisionClient(
         ENDPOINT, CognitiveServicesCredentials(SUBSCRIPTION_KEY)
     )
-    IMGUR_CONFIG = [client_id, client_secret, access_token, refresh_token]
+    IMGUR_CONFIG = client_id, client_secret, access_token, refresh_token
     IMGUR_CLIENT = Imgur(config=IMGUR_CONFIG)
     
     img = Image.open(filename)
