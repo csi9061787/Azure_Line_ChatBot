@@ -147,7 +147,7 @@ def azure_ocr(url):
                     
     r = re.complie("[0-9A-Z]{2,4}[.-]{1}[0-9A-Z]{2,4}")
     text = list(filter(r.match, text))
-    return text[0].replace('.','-') if len(text) > 0 else "None"
+    return text[0].replace('.','-') if len(text) > 0 else ""
 
 @app.route("/callback", methods=["POST"])
 def callback():
