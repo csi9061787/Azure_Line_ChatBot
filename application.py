@@ -85,7 +85,7 @@ def azure_face_recongition(filename):
       ENDPOINT, CognitiveServicesCredentials(KEY))
     
     PERSON_GROUP_ID = "ceb102"
-    img = open("C360_20210417-175242-77.jpg", 'r+b')
+    img = open(filename, 'r+b')
     detected_face = FACE_CLIENT.face.detect_with_stream(
         img, detection_model="detection_01")
     try:
