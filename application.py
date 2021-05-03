@@ -34,6 +34,13 @@ def azure_object_detection(url, filename):
     CV_CLIENT = ComputerVisionClient(
         ENDPOINT, CognitiveServicesCredentials(SUBSCRIPTION_KEY)
     )
+    IMGUR_CONFIG = {
+      "client_id": os.getenv("imgur_client_id"),
+      "client_secret": os.getenv("imgur_client_secret"),
+      "access_token": os.getenv("imgur_access_token"),
+      "refresh_token": os.getenv("imgur_refresh_token")
+    }
+    
     img = Image.open(filename)
     draw = ImageDraw.Draw(img)
     font_size = int(5e-2 * img.size[1])
@@ -60,7 +67,7 @@ def azure_object_detection(url, filename):
                 font=fnt,
             )
     img.save(filename)
-    image = IMGUR_CLIENT.image_upload(filename, '', '')
+    image = IMGUR_CLIENT.image_upload(filename, "title", "description")
     link = image["response"]["data"]["link"]
     
     os.remove(filename)
