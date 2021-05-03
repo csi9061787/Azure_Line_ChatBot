@@ -9,7 +9,6 @@ from imgur_python import Imgur
 import re
 from PIL import Image, ImageDraw, ImageFont
 import time
-import requests
 from datetime import datetime, timezone, timedelta
 from azure.cognitiveservices.vision.computervision \
 import ComputerVisionClient
