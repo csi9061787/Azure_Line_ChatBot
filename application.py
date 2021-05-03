@@ -164,7 +164,7 @@ def handle_message(event):
         LINE_BOT.reply_message(event.reply_token, message)
         
     except:
-    message =TextSendMessage(text=event.message.text)
+    message = TextSendMessage(text=event.message.text)
     LINE_BOT.reply_message(event.reply_token, message)
 
 @HANDLER.add(MessageEvent, message=ImageMessage)
