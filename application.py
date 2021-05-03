@@ -40,6 +40,7 @@ def azure_object_detection(url, filename):
       "access_token": os.getenv("imgur_access_token"),
       "refresh_token": os.getenv("imgur_refresh_token")
     }
+    IMGUR_CLIENT = Imgur(config=IMGUR_CONFIG)
     
     img = Image.open(filename)
     draw = ImageDraw.Draw(img)
