@@ -88,7 +88,7 @@ def azure_face_recongition(filename):
         img, detection_model="detection_01")
     
     if len(detected_face) != 1:
-        return "None"
+        return ""
     results = FACE_CLIENT.face.identify(
             [detected_face[0].face_id], PERSON_GROUP_ID)
     if len(results) == 0:
@@ -97,7 +97,7 @@ def azure_face_recongition(filename):
     if len(result["candidates"]) == 0:
         return "unknown"
     if result["candidates"][0]["confidence"] < 0.5:
-        return "None"
+        return "unknown"
     person = FACE_CLIENT.person_group_person.get(
             PERSON_GROUP_ID, result["candidates"][0]["person_id"]
             )
