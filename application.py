@@ -7,7 +7,6 @@ from azure.cognitiveservices.vision.face import FaceClient
 import os
 import json
 from imgur_python import Imgur
-import requests
 import re
 from PIL import Image, ImageDraw, ImageFont
 import time
@@ -34,9 +33,8 @@ IMGUR_CONFIG = {
         "client_secret" : os.getenv("imgur_client_secret"),
         "access_token" : os.getenv("imgur_access_token"),
         "refresh_token" : os.getenv("imgur_refresh_token")
-        }
+}
 IMGUR_CLIENT = Imgur(config=IMGUR_CONFIG)
-
 
 def azure_object_detection(url, filename):
     SUBSCRIPTION_KEY = os.getenv("detection_key")
@@ -63,7 +61,7 @@ def azure_object_detection(url, filename):
               name, left, right, top, bot))
             draw.rectangle(
               [left, top, right, bot],
-              outline=(255, 0, 0), width=3)
+              outline=(255, 0, 0), width=5)
             draw.text(
                 [left, top + font_size],
                 "{0} {1:0.1f}".format(name, confidence * 100),
@@ -88,21 +86,22 @@ def azure_face_recongition(filename):
     img = open(filename, 'r+b')
     detected_face = FACE_CLIENT.face.detect_with_stream(
         img, detection_model="detection_01")
-    try:
-        results = FACE_CLIENT.face.identify(
-                [detected_face[0].face_id], PERSON_GROUP_ID)
-        result = results[0].as_dict()
-# 如果在資料庫中有找到相像的人，會給予person ID
-# 再拿此person ID去查詢名字
-        if result["candidates"][0]["confidence"] > 0.5:
-            person = FACE_CLIENT.person_group_person.get(
-                    PERSON_GROUP_ID, result["candidates"][0]["person_id"]
-                    )
-            print("Person name is {}".format(person.name))
-        else:
-            print("Confidence is lower")
-    except:
-        print("I can't find face")
+    
+    if len(detected_face) != 1:
+        return "None"
+    results = FACE_CLIENT.face.identify(
+            [detected_face[0].face_id], PERSON_GROUP_ID)
+    if len(results) == 0:
+        return "unknown"
+    result = results[0].as_dict()
+    if len(result["candidates"]) == 0:
+        return "unknown"
+    if result["candidates"][0]["confidence"] < 0.5:
+        return "None"
+    person = FACE_CLIENT.person_group_person.get(
+            PERSON_GROUP_ID, result["candidates"][0]["person_id"]
+            )
+    return person.name
         
 def azure_describe(url):
     SUBSCRIPTION_KEY = os.getenv("detection_key")
@@ -181,6 +180,11 @@ def handle_message(event):
 
 @HANDLER.add(MessageEvent, message=ImageMessage)
 def handle_content_message(event):
+    
+    print(event.message)
+    print(event.source.user_id)
+    print(event.message.id)
+    
     filename = "{}.jpg".format(event.message.id)
     message_content = LINE_BOT.get_message_content(event.message.id)
     with open(filename, "wb") as f_w:
@@ -191,6 +195,7 @@ def handle_content_message(event):
     image = IMGUR_CLIENT.image_upload(filename, "title", "description")
     link = image["response"]["data"]["link"]
     name = azure_face_recongition(filename)
+    
     if name != "":
         now = datetime.now(timezone(timedelta(hours=8))).strftime("%Y-%m-%d %H:%M")
         output = "{0}, {1}".format(name, now)
