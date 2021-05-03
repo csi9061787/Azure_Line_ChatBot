@@ -6,5 +6,4 @@ imgur-python
 Pillow
 azure.cognitiveservices.vision.computervision
 datetime
-msrest.authentication
 
