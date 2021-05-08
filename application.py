@@ -217,8 +217,10 @@ def handle_content_message(event):
     f_r.close()
 # 依情況更動 components
     bubble["body"]["contents"][0]["contents"][0]["url"]=link
-    bubble["body"]["contents"][1]["contents"][0]["contents"][0]["contents"][0]\["text"]=output_name
-    bubble["body"]["contents"][1]["contents"][0]["contents"][0]["contents"][2]["text"]=output_content
+    bubble["body"]["contents"][1]["contents"][0]["contents"][0]["contents"][0]\
+    ["text"]=output_name
+    bubble["body"]["contents"][1]["contents"][0]["contents"][0]["contents"][2]\
+    ["text"]=output_content
     LINE_BOT.reply_message(
         event.reply_token, 
         [
