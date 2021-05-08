@@ -1,9 +1,9 @@
 # Azure_Line_ChatBot
 ### Azure_face_recongition
-![image](https://github.com/csi9061787/Azure_Line_ChatBot/blob/main/IMAGE/Screenshot_20210508-103925_LINE.jpg)
+<img src="https://github.com/csi9061787/Azure_Line_ChatBot/blob/main/IMAGE/Screenshot_20210508-103925_LINE.jpg" width="400" height="800"/><br/>
 
 ### Aure_describe
-<img src="https://github.com/csi9061787/Azure_Line_ChatBot/blob/main/IMAGE/Screenshot_20210508-103940_LINE.jpg" width="200" height="200"/><br/>
+<img src="https://github.com/csi9061787/Azure_Line_ChatBot/blob/main/IMAGE/Screenshot_20210508-103940_LINE.jpg" width="400" height="800"/><br/>
 
 ### Azure_ocr
-![image]https://imgur.com/zgTiXbW
+<img src="https://github.com/csi9061787/Azure_Line_ChatBot/blob/main/IMAGE/Screenshot_20210508-104041_LINE.jpg" width="400" height="800"/><br/>
