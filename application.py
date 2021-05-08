@@ -198,22 +198,27 @@ def handle_content_message(event):
     
     if name != "":
         now = datetime.now(timezone(timedelta(hours=8))).strftime("%Y-%m-%d %H:%M")
-        output = "{0}, {1}".format(name, now)
+        output_name = name
+        output_content = now
     else:
         plate = azure_ocr(link)
         link_ob = azure_object_detection(link, filename)
         
         if len(plate) > 0:
-            output = "License Plate:{}".format(plate)
+            output_name = "License Plate"
+            output_content = plate
         else:
-            output = azure_describe(link)
+            output_name = "Result"
+            output_content = azure_describe(link)
+            
         link = link_ob
     with open("flex_message.json", "r") as f_r:
         bubble = json.load(f_r)
     f_r.close()
 # 依情況更動 components
-    bubble["hero"]["url"]=link
-    bubble["body"]["contents"][0]["text"]=output
+    bubble["body"]["contents"][0]["contents"][0]["url"]=link
+    bubble["body"]["contents"][1]["contents"][0]["contents"][0]["contents"][0]\["text"]=output_name
+    bubble["body"]["contents"][1]["contents"][0]["contents"][0]["contents"][2]["text"]=output_content
     LINE_BOT.reply_message(
         event.reply_token, 
         [
