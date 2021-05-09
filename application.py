@@ -227,3 +227,6 @@ def handle_content_message(event):
             FlexSendMessage(alt_text="Report", contents=bubble)
             ]
     )
+
+if __name__=="__main__":
+    app.run()
